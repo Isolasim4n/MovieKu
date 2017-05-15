@@ -26,19 +26,20 @@ import id.sch.smktelkom_mlg.privateassignment.xirpl326.aplikasisam.model.Results
 public class SourceAdapter extends RecyclerView.Adapter<SourceAdapter.ViewHolder> {
     public String url = "https://image.tmdb.org/t/p/w500";
     public String image;
-    ArrayList<Results> list;
+    ArrayList<Results> mlist;
     Home home;
     Context context;
 
-    public SourceAdapter(Home Home, ArrayList<Results> list, Context context) {
-        this.list = list;
-        this.home = Home;
+    public SourceAdapter(ArrayList<Results> mlist, Home home, Context context) {
+        this.mlist = mlist;
+        this.home = home;
         this.context = context;
     }
 
 
+
     @Override
-    public SourceAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.home_list, parent, false);
         ViewHolder vh = new ViewHolder(v);
@@ -46,8 +47,8 @@ public class SourceAdapter extends RecyclerView.Adapter<SourceAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(SourceAdapter.ViewHolder holder, int position) {
-        final Results results = list.get(position);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final Results results = mlist.get(position);
         holder.tvName.setText(results.title);
         holder.tvDesc.setText(results.overview);
         image = url + results.backdrop_path;
@@ -70,30 +71,26 @@ public class SourceAdapter extends RecyclerView.Adapter<SourceAdapter.ViewHolder
                 context.startActivity(intent);
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        if (list != null)
-            return list.size();
+        if (mlist != null)
+            return mlist.size();
         return 0;
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
         TextView tvDesc;
         ImageView imageView;
         CardView cardView;
-
         public ViewHolder(View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.textViewName);
             tvDesc = (TextView) itemView.findViewById(R.id.textViewDesc);
             imageView = (ImageView) itemView.findViewById(R.id.imageViewMain);
             cardView = (CardView) itemView.findViewById(R.id.CardView);
-
         }
     }
 }
